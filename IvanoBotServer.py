@@ -57,10 +57,10 @@ class MyBot(discord.Client):
     
         print(f"Controllo orario UTC: {ora}:{minuto:02d}")
 
-        if 10 <= ora <= 21 and minuto == 45:
+        if 9 <= ora <= 20 and minuto == 45:
             try:
                 canale = await self.fetch_channel(ID_CANALE)
-                if ora % 2 == 0:
+                if ora % 2 != 0:
                     await canale.send("⏰ 🎖️ Tra 15 minuti c'è l'EVENTO AI MILITARI @everyone 🎖️ ⏰")
                 else:
                     await canale.send("⏰ 🚢 Tra 15 minuti c'è l'EVENTO AL PORTO @everyone 🚢 ⏰")
