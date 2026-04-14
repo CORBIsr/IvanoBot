@@ -6,7 +6,7 @@ import threading
 from flask import Flask
 import os
 
-# --- CONFIGURAZIONE FLASK (Keep-Alive) ---
+# --- CONFIGURAZIONE FLASK ---
 app = Flask('')
 
 @app.route('/')
@@ -14,12 +14,11 @@ def home():
     return "Bot Online!"
 
 def run_flask():
-    # Render usa la porta 8080 o 10000 di solito, ma 0.0.0.0 è universale per il cloud
     app.run(host='0.0.0.0', port=8080)
 
 def keep_alive():
     t = threading.Thread(target=run_flask)
-    t.daemon = True # Il thread si chiude se il programma principale si ferma
+    t.daemon = True
     t.start()
 
 # --- CONFIG BOT ---
@@ -55,8 +54,7 @@ class MyBot(discord.Client):
         now = datetime.now(timezone.utc)
         ora = now.hour
         minuto = now.minute
-        
-        # Log per vedere l'orario UTC nel pannello di Render
+    
         print(f"Controllo orario UTC: {ora}:{minuto:02d}")
 
         if 10 <= ora <= 21 and minuto == 45:
@@ -72,7 +70,6 @@ class MyBot(discord.Client):
 
 # --- AVVIO ---
 if __name__ == "__main__":
-    # Avviamo Flask solo se NON siamo in modalità test
     if "test" not in sys.argv:
         keep_alive()
         
