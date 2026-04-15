@@ -1,0 +1,102 @@
+[
+    {
+        "nome": "Lotta Aeroporto",
+        "orario": "18:45"
+    },
+    {
+        "nome": "Porto (Harbour)",
+        "orario": "19:20"
+    },
+    {
+        "nome": "Venice ovest",
+        "orario": "19:25"
+    },
+    {
+        "nome": "Discarica",
+        "orario": "19:40"
+    },
+    {
+        "nome": "Molo di Santa Monica",
+        "orario": "19:45"
+    },
+    {
+        "nome": "Hollywood est",
+        "orario": "20:20"
+    },
+    {
+        "nome": "Compton industriale",
+        "orario": "20:25"
+    },
+    {
+        "nome": "Union Station",
+        "orario": "20:40"
+    },
+    {
+        "nome": "Scalo [Porto]",
+        "orario": "20:45"
+    },
+    {
+        "nome": "Pershing Square",
+        "orario": "21:00"
+    },
+    {
+        "nome": "Venice canals",
+        "orario": "21:05"
+    },
+    {
+        "nome": "Marina",
+        "orario": "21:20"
+    },
+    {
+        "nome": "San Pedro nordovest",
+        "orario": "21:40"
+    },
+    {
+        "nome": "Downtown Compton",
+        "orario": "21:45"
+    },
+    {
+        "nome": "Compton nord",
+        "orario": "22:00"
+    },
+    {
+        "nome": "Venice est",
+        "orario": "22:05"
+    },
+    {
+        "nome": "Viale delle stelle",
+        "orario": "22:20"
+    },
+    {
+        "nome": "Hollywood ovest",
+        "orario": "22:25"
+    },
+    {
+        "nome": "Costa",
+        "orario": "22:40"
+    },
+    {
+        "nome": "Hollywood est",
+        "orario": "22:45"
+    },
+    {
+        "nome": "Centro città",
+        "orario": "23:20"
+    },
+    {
+        "nome": "Compton ovest",
+        "orario": "23:25"
+    },
+    {
+        "nome": "San Pedro centro",
+        "orario": "23:40"
+    },
+    {
+        "nome": "Coastal San Pedro",
+        "orario": "23:45"
+    },
+    {
+        "nome": "Centro medico",
+        "orario": "02:00"
+    }
+]
