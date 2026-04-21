@@ -6,7 +6,6 @@ import sys
 import threading
 import json
 from flask import Flask
-import os
 
 # --- CONFIGURAZIONE FLASK (Keep-Alive) ---
 app = Flask('')
@@ -26,8 +25,8 @@ def keep_alive():
 
 # --- CONFIG BOT ---
 TOKEN = os.getenv('DISCORD_TOKEN')
-ID_CANALE_EVENTI = 1493274617001808043
-ID_CANALE_SONDAGGI = 1493894792420261949
+ID_CANALE_EVENTI = os.getenv('CANALE_EVENTI_TOKEN')
+ID_CANALE_SONDAGGI = os.getenv('CANALE_SONDAGGI_TOKEN')
 
 with open("lotte.json", "r") as file:
     dati_caricati = json.load(file)
@@ -41,6 +40,7 @@ class MyBot(discord.Client):
     async def setup_hook(self):
         if not self.modalita_test:
             self.controllo_orario.start()
+            self.controllo_sondaggio.start()
 
     async def on_ready(self):
         print(f"Bot loggato come {self.user}")
@@ -81,7 +81,7 @@ class MyBot(discord.Client):
 
         if 10 <= ora <= 21 and minuto == 45:
             try:
-                canale = await self.fetch_channel(ID_CANALE)
+                canale = await self.fetch_channel(ID_CANALE_EVENTI)
                 if ora % 2 == 0:
                     await canale.send("⏰ 🎖️ Tra 15 minuti c'è l'EVENTO AI MILITARI @everyone 🎖️ ⏰")
                 else:
@@ -90,7 +90,7 @@ class MyBot(discord.Client):
             except Exception as e:
                 print(f"Errore critico durante l'invio: {e}")
 
-    orario_sondaggio = time(hour=9, minute=0, tzinfo=timezone.utc)
+    orario_sondaggio = time(hour=12, minute=0, tzinfo=timezone.utc)
     @tasks.loop(time=orario_sondaggio)
     async def controllo_sondaggio(self):
         try:
