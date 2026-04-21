@@ -6,6 +6,7 @@ import sys
 import threading
 import json
 from flask import Flask
+import os
 
 # --- CONFIGURAZIONE FLASK (Keep-Alive) ---
 app = Flask('')
