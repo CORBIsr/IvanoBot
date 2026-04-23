@@ -59,7 +59,6 @@ class MyBot(discord.Client):
                         duration=timedelta(hours=24) # Quanto dura il sondaggio
                     )
                     sondaggio.add_answer(text="Si", emoji="✅")
-                    sondaggio.add_answer(text="No", emoji="❌")
                     await canale.send(poll=sondaggio)
 
                 #print(dati_caricati)
@@ -90,7 +89,7 @@ class MyBot(discord.Client):
             except Exception as e:
                 print(f"Errore critico durante l'invio: {e}")
 
-    orario_sondaggio = time(hour=10, minute=0, tzinfo=timezone.utc)
+    orario_sondaggio = time(hour=10, minute=30, tzinfo=timezone.utc)
     @tasks.loop(time=orario_sondaggio)
     async def controllo_sondaggio(self):
         try:
@@ -99,7 +98,7 @@ class MyBot(discord.Client):
 
                 sondaggio = discord.Poll(
                     question=f"Partecipazione lotta {lotta.get('nome', 'Sconosciuta')} {lotta.get('orario', 'Orario sconosciuto')}",
-                    duration=timedelta(hours=24) # Quanto dura il sondaggio
+                    duration=timedelta(hours=20) # Quanto dura il sondaggio
                 )
 
                 sondaggio.add_answer(text="Si", emoji="✅")
