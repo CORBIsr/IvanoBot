@@ -7,7 +7,6 @@ import threading
 import json
 from flask import Flask
 import os
-
 # --- CONFIGURAZIONE FLASK (Keep-Alive) ---
 app = Flask('')
 
@@ -80,10 +79,10 @@ class MyBot(discord.Client):
         # Log per vedere l'orario UTC nel pannello di Render
         print(f"Controllo orario UTC: {ora}:{minuto:02d}")
 
-        if 10 <= ora <= 21 and minuto == 45:
+        if 9 <= ora <= 20 and minuto == 45:
             try:
                 canale = await self.fetch_channel(ID_CANALE_EVENTI)
-                if ora % 2 == 0:
+                if ora % 2 != 0:
                     await canale.send("⏰ 🎖️ Tra 15 minuti c'è l'EVENTO AI MILITARI @everyone 🎖️ ⏰")
                 else:
                     await canale.send("⏰ 🚢 Tra 15 minuti c'è l'EVENTO AL PORTO @everyone 🚢 ⏰")
@@ -104,7 +103,6 @@ class MyBot(discord.Client):
                 )
 
                 sondaggio.add_answer(text="Si", emoji="✅")
-                sondaggio.add_answer(text="No", emoji="❌")
 
                 await canale.send(poll=sondaggio)
                 print("Sondaggio nativo inviato!")
