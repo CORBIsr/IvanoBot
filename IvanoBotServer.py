@@ -90,7 +90,7 @@ class MyBot(discord.Client):
             except Exception as e:
                 print(f"Errore critico durante l'invio: {e}")
 
-    orario_sondaggio = time(hour=10, minute=30, tzinfo=timezone.utc)
+    orario_sondaggio = time(hour=11, minute=30, tzinfo=timezone.utc)
     @tasks.loop(time=orario_sondaggio)
     async def controllo_sondaggio(self):
         try:
