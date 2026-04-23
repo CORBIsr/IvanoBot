@@ -30,7 +30,8 @@ ID_CANALE_SONDAGGI = os.getenv('CANALE_SONDAGGI_TOKEN')
 
 with open("lotte.json", "r") as file:
     dati_caricati = json.load(file)
-    #print(type(dati_caricati))
+    print("lettura dati")
+    print(type(dati_caricati))
 class MyBot(discord.Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
