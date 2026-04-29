@@ -30,8 +30,7 @@ ID_CANALE_SONDAGGI = os.getenv('CANALE_SONDAGGI_TOKEN')
 
 with open("lotte.json", "r") as file:
     dati_caricati = json.load(file)
-    print("lettura dati")
-    print(dati_caricati)
+    #print(type(dati_caricati))
 class MyBot(discord.Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -39,36 +38,12 @@ class MyBot(discord.Client):
         
 
     async def setup_hook(self):
-        if not self.modalita_test:
-            self.controllo_orario.start()
-            self.controllo_sondaggio.start()
+        self.controllo_orario.start()
+        self.controllo_sondaggio.start()
+        self.pulizia_canali.start()
 
     async def on_ready(self):
         print(f"Bot loggato come {self.user}")
-        if self.modalita_test:
-            print("--- MODALITÀ TEST ATTIVATA ---")
-            try:
-                canale = await self.fetch_channel(ID_CANALE_EVENTI)
-                #await canale.send("⏰ 🎖️ Test EVENTO MILITARI @everyone 🎖️ ⏰")
-                #await canale.send("⏰ 🚢 Test EVENTO PORTO @everyone 🚢 ⏰")
-
-                canale = await self.fetch_channel(ID_CANALE_SONDAGGI)
-
-                for lotta in dati_caricati:
-                    sondaggio = discord.Poll(
-                        question=f"Partecipazione lotta {lotta.get('nome', 'Sconosciuta')} {lotta.get('orario', 'Orario sconosciuto')}",
-                        duration=timedelta(hours=24) # Quanto dura il sondaggio
-                    )
-                    sondaggio.add_answer(text="Si", emoji="✅")
-                    await canale.send(poll=sondaggio)
-
-                #print(dati_caricati)
-                print("Test completato. Chiudo il bot...")
-            except Exception as e:
-                print(f"Errore nel test: {e}")
-            await self.close() 
-        else:
-            print("--- MODALITÀ NORMALE (TIMER ATTIVO) ---")
 
     @tasks.loop(seconds=60)
     async def controllo_orario(self):
@@ -89,8 +64,21 @@ class MyBot(discord.Client):
                 print(f"Messaggio inviato alle {ora}:{minuto} UTC")
             except Exception as e:
                 print(f"Errore critico durante l'invio: {e}")
+    
+    orario_pulizia = time(hour=2, minute=00, tzinfo=timezone.utc)
+    @tasks.loop(time=orario_pulizia)
+    async def pulizia_canali(self):
+        try:
+            canale_sondaggi = await self.fetch_channel(ID_CANALE_SONDAGGI)
+            canale_reminder = await self.fetch_channel(ID_CANALE_EVENTI)
 
-    orario_sondaggio = time(hour=11, minute=0, tzinfo=timezone.utc)
+            await canale_sondaggi.purge(limit=100)
+            await canale_reminder.purge(limit=100)
+            print("Canali puliti!")
+        except Exception as e:
+            print(f"Errore durante la pulizia: {e}")
+
+    orario_sondaggio = time(hour=10, minute=30, tzinfo=timezone.utc)
     @tasks.loop(time=orario_sondaggio)
     async def controllo_sondaggio(self):
         try:
@@ -111,9 +99,7 @@ class MyBot(discord.Client):
             print(f"Errore: {e}")
 # --- AVVIO ---
 if __name__ == "__main__":
-    # Avviamo Flask solo se NON siamo in modalità test
-    if "test" not in sys.argv:
-        keep_alive()
+    keep_alive()
         
     intents = discord.Intents.default()
     client = MyBot(intents=intents)
